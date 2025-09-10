@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, Fragment } from "react";
+import { useState, Fragment, useEffect } from "react";
 import { motion } from "framer-motion";
 import { converters } from "@/lib/conversions";
 import { FAQS } from "@/lib/faqs";

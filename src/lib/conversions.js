@@ -138,7 +138,22 @@ export function convertCurrency(value, from, to) {
     EUR: 0.92,
     GBP: 0.79,
     INR: 83.0,
+    JPY: 147.0,
+    AUD: 1.55,
+    CAD: 1.36,
+    CHF: 0.87,
+    CNY: 7.25,
+    SGD: 1.35,
+    AED: 3.67,
+    SAR: 3.75,
+    ZAR: 18.8,
+    BRL: 5.0,
   };
+
+  if (!rates[from] || !rates[to]) {
+    throw new Error("Unsupported currency");
+  }
+
   return (value / rates[from]) * rates[to];
 }
 

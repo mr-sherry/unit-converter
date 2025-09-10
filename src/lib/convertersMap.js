@@ -103,12 +103,25 @@ export const CONVERTERS = {
   currency: {
     title: "Currency Converter",
     description:
-      "Convert between major world currencies like USD, EUR, GBP, and INR.",
-    units: ["USD", "EUR", "GBP", "INR"],
+      "Easily convert between major world currencies like USD, EUR, GBP, INR, JPY, AUD, and more. Exchange rates are approximate and change daily.",
+    units: [
+      "USD", // US Dollar
+      "EUR", // Euro
+      "GBP", // British Pound
+      "INR", // Indian Rupee
+      "JPY", // Japanese Yen
+      "AUD", // Australian Dollar
+      "CAD", // Canadian Dollar
+      "CNY", // Chinese Yuan
+      "AED", // UAE Dirham
+    ],
     realWorldExamples: [
       "1 USD ≈ 0.92 EUR (exchange rates vary daily).",
       "1 GBP ≈ 1.27 USD (subject to change).",
       "A coffee in India may cost about 150 INR (≈ 1.8 USD).",
+      "A sushi meal in Japan may cost around 2,000 JPY (≈ 13.6 USD).",
+      "An iPhone priced at 1,299 AUD is about 837 USD.",
+      "A Dubai metro ticket may cost 5 AED (≈ 1.36 USD).",
     ],
   },
 };
