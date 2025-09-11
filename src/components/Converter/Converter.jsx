@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, Fragment, useEffect } from "react";
+import { useState, Fragment, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { converters } from "@/lib/conversions";
 import { FAQS } from "@/lib/faqs";
@@ -13,9 +13,14 @@ import {
   FireIcon,
   BoltIcon,
 } from "@heroicons/react/20/solid";
+import { useConversions } from "@/context/ConversionsContext";
+import Image from "next/image";
+import RecentConversions from "./RecentConversions";
 
 export default function Converter({ type, config }) {
   const convertFn = converters[type]?.fn;
+  const { saveConversion } = useConversions();
+  const resultRef = useRef(null);
 
   const [value, setValue] = useState("");
   const [from, setFrom] = useState(config.units[0]);
@@ -29,6 +34,15 @@ export default function Converter({ type, config }) {
     }
     const res = convertFn(parseFloat(value), from, to);
     setResult(`${res.toFixed(6)} ${to}`);
+
+    saveConversion({
+      from,
+      to,
+      value: parseFloat(value),
+      result: parseFloat(res.toFixed(2)),
+      type,
+    });
+    resultRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const faqs = FAQS[type] || [];
@@ -115,10 +129,8 @@ export default function Converter({ type, config }) {
       />
 
       <div className="justify-center items-center flex flex-col gap-16">
-        {/* Left column */}
-
-        <div className="flex flex-row justify-between items-center">
-          <div className="w-[50%]">
+        <div className="flex flex-row justify-between items-center w-[100%]">
+          <div className="md:w-[50%] w-[100%]">
             <h1 className="text-5xl font-bold text-gray-900">{config.title}</h1>
             <p className="text-gray-700 text-lg">
               {config.description} Convert between {config.units.join(", ")}{" "}
@@ -230,7 +242,7 @@ export default function Converter({ type, config }) {
             </div>
 
             {/* Result */}
-            <div className="mt-6">
+            <div ref={resultRef} className="mt-6">
               <h2 className="text-2xl font-semibold text-gray-900 mb-3">
                 Conversion Result
               </h2>
@@ -268,19 +280,25 @@ export default function Converter({ type, config }) {
               </div>
             </div>
           </div>
-          <div className="w-[50%]">
+          <div className="md:w-[50%] none md:block">
             {/* Right Column Image */}
-            <div className="flex-1 hidden lg:flex justify-center items-center">
-              <img
+            <div className="hidden md:flex justify-center items-center">
+              <Image
                 src={imageSrc}
                 alt={`${config.title} illustration`}
-                className="w-full max-w-md object-contain"
+                className="hidden md:block w-full max-w-md object-contain"
+                height={200}
+                width={200}
               />
             </div>
           </div>
         </div>
 
         <div className="w-full  ">
+          {/* recent conversions */}
+          <div className="w-full max-w-6xl mx-auto">
+            <RecentConversions />
+          </div>
           {/* Real World Examples */}
           <div className="w-full max-w-6xl mx-auto mt-12">
             <h2 className="text-3xl font-bold mb-4 text-gray-900 border-b-2 border-primary pb-2">

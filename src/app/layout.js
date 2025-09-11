@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
+import { ConversionProvider } from "@/context/ConversionsContext";
 
 export const metadata = {
   title: "Unit Converter",
@@ -12,9 +13,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Header />
-        {children}
-        <Footer />
+        <ConversionProvider>
+          <Header />
+          {children}
+          <Footer />
+        </ConversionProvider>
       </body>
     </html>
   );

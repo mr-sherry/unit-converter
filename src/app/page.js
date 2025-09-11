@@ -7,7 +7,7 @@ import WhyUse from "@/components/Home/WhyUse";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gray-50 text-gray-900">
+    <main className="min-h-screen mt-10 bg-gray-50 text-gray-900">
       <Hero />
       <FeaturedConverters />
       <WhyUse />

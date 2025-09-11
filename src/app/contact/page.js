@@ -12,7 +12,7 @@ export default function Contact() {
   };
 
   return (
-    <section className="w-full py-20 px-6 bg-gradient-to-b from-accent/10 to-white">
+    <section className="w-full py-30 px-6 bg-gradient-to-b from-accent/10 to-white">
       <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
         {/* Left Side - Image */}
         <motion.div
