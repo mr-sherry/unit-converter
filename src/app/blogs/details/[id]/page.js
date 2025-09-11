@@ -3,6 +3,7 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import blogs from "@/lib/blogs";
+import LoaderLink from "@/components/LoaderLink";
 
 export default function Page() {
   const { id } = useParams();
@@ -42,9 +43,11 @@ export default function Page() {
   return (
     <div className="max-w-6xl mx-auto p-6 mt-14">
       {/* Back button */}
-      <button className="text-sm text-gray-600 mb-4 hover:underline">
-        ← Back
-      </button>
+      <LoaderLink href={"/blogs"}>
+        <button className="text-sm text-gray-600 mb-4 cursor-pointer">
+          ← Back
+        </button>
+      </LoaderLink>
 
       {/* Blog Header */}
       <div className="space-y-2 mb-6 flex flex-col justify-center items-center">

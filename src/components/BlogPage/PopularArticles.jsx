@@ -1,3 +1,5 @@
+import LoaderLink from "../LoaderLink";
+
 // components/PopularArticles.js
 export default function PopularArticles() {
   const articles = {
@@ -38,9 +40,11 @@ export default function PopularArticles() {
           className="object-cover rounded-2xl w-130 h-100"
         />
         <div className="mt-2 w-130">
-          <h2 className="text-[30px] font-semibold mb-2">
-            {articles.big.title}
-          </h2>
+          <LoaderLink href={"/blogs/details/unit-converter-guide"}>
+            <h2 className="text-[30px] font-semibold mb-2">
+              {articles.big.title}
+            </h2>
+          </LoaderLink>
           <span className="inline-block px-3 py-1 text-sm bg-gray-100 rounded-full">
             {articles.big.category}
           </span>
@@ -50,17 +54,18 @@ export default function PopularArticles() {
       {/* Three small articles */}
       <div className="flex flex-col justify-center items-center gap-4">
         {articles.small.map((article, idx) => (
-          <div
-            key={idx}
-            className="flex gap-4 rounded-2xl overflow-hidden "
-          >
+          <div key={idx} className="flex gap-4 rounded-2xl overflow-hidden ">
             <img
               src={article.image}
               alt={article.title}
               className="w-46 h-42 object-cover rounded-xl"
             />
             <div className="flex flex-col justify-between">
-              <h3 className="text-[25px] font-semibold">{article.title}</h3>
+              <LoaderLink href={"/blogs/details/unit-converter-guide"}>
+                <h3 className="text-[25px] font-semibold hover:!text-gray-600">
+                  {article.title}
+                </h3>
+              </LoaderLink>
               <p className="text-sm text-gray-600 line-clamp-2">
                 {article.desc}
               </p>

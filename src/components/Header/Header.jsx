@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
+import LoaderLink from "../LoaderLink";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,48 +18,57 @@ export default function Header() {
             animate={{ opacity: 1, y: 0 }}
             className="text-2xl font-bold text-[#112D4E]"
           >
-            <Link href="/" className="!text-black">
+            <LoaderLink href="/" className="!text-black">
               Unit<span className="text-black">X</span>
-            </Link>
+            </LoaderLink>
           </motion.div>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex gap-6 text-[#112D4E] font-medium">
-            <Link href="/" className="hover:text-[#3F72AF] transition">
+            <LoaderLink href="/" className="hover:text-[#3F72AF] transition">
               Home
-            </Link>
-            <Link
+            </LoaderLink>
+            <LoaderLink
               href="/all-conversions"
               className="hover:text-[#3F72AF] transition"
             >
               Conversions
-            </Link>
-            <Link href="/blogs" className="hover:text-[#3F72AF] transition">
+            </LoaderLink>
+            <LoaderLink
+              href="/blogs"
+              className="hover:text-[#3F72AF] transition"
+            >
               Blog
-            </Link>
-            <Link href="/about" className="hover:text-[#3F72AF] transition">
+            </LoaderLink>
+            <LoaderLink
+              href="/about"
+              className="hover:text-[#3F72AF] transition"
+            >
               About
-            </Link>
-            <Link
+            </LoaderLink>
+            <LoaderLink
               href="/privacy-policy"
               className="hover:text-[#3F72AF] transition"
             >
               Privacy
-            </Link>
-            <Link href="/terms" className="hover:text-[#3F72AF] transition">
+            </LoaderLink>
+            <LoaderLink
+              href="/terms"
+              className="hover:text-[#3F72AF] transition"
+            >
               Terms
-            </Link>
+            </LoaderLink>
           </nav>
         </div>
 
         {/* Right side: Request Conversion Button */}
         <div className="flex items-center gap-4">
-          <Link
+          <LoaderLink
             href="/contact"
             className="hidden md:inline-block !bg-[#3F72AF] !text-white px-4 py-2 rounded-xl shadow hover:!bg-[#112D4E] transition"
           >
             Request Conversion
-          </Link>
+          </LoaderLink>
 
           {/* Mobile Menu Button */}
           <button
@@ -78,32 +88,35 @@ export default function Header() {
           className="md:hidden bg-[#F9F7F7] border-t border-[#DBE2EF] shadow-lg"
         >
           <div className="flex flex-col px-6 py-4 space-y-4 text-[#112D4E] font-medium">
-            <Link href="/" onClick={() => setIsOpen(false)}>
+            <LoaderLink href="/" onClick={() => setIsOpen(false)}>
               Home
-            </Link>
-            <Link href="/all-conversions" onClick={() => setIsOpen(false)}>
+            </LoaderLink>
+            <LoaderLink
+              href="/all-conversions"
+              onClick={() => setIsOpen(false)}
+            >
               Conversions
-            </Link>
-            <Link href="/blogs" onClick={() => setIsOpen(false)}>
+            </LoaderLink>
+            <LoaderLink href="/blogs" onClick={() => setIsOpen(false)}>
               Blog
-            </Link>
-            <Link href="/about" onClick={() => setIsOpen(false)}>
+            </LoaderLink>
+            <LoaderLink href="/about" onClick={() => setIsOpen(false)}>
               About
-            </Link>
-            <Link href="/privacy-policy" onClick={() => setIsOpen(false)}>
+            </LoaderLink>
+            <LoaderLink href="/privacy-policy" onClick={() => setIsOpen(false)}>
               Privacy
-            </Link>
-            <Link href="/terms" onClick={() => setIsOpen(false)}>
+            </LoaderLink>
+            <LoaderLink href="/terms" onClick={() => setIsOpen(false)}>
               Terms
-            </Link>
+            </LoaderLink>
 
-            <Link
+            <LoaderLink
               href="/contact"
               onClick={() => setIsOpen(false)}
               className="bg-[#3F72AF] !text-white px-4 py-2 rounded-xl shadow hover:!bg-[#112D4E] hover:!text-white transition"
             >
               Request Conversion
-            </Link>
+            </LoaderLink>
           </div>
         </motion.nav>
       )}

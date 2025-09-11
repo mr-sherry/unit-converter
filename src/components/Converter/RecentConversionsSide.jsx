@@ -2,7 +2,7 @@
 
 import { useConversions } from "@/context/ConversionsContext";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
+import LoaderLink from "../LoaderLink";
 
 export default function RecentConversionsSide() {
   const { conversions } = useConversions();
@@ -37,14 +37,14 @@ export default function RecentConversionsSide() {
               layout
               className="p-4 border rounded-lg bg-white shadow-sm flex flex-col cursor-pointer hover:shadow-md transition"
             >
-              <Link
+              <LoaderLink
                 href={`/converter/${c.type}`}
                 className="flex flex-col h-full justify-between"
               >
                 <span className="text-gray-900 font-semibold text-lg">
                   {c.value} {c.from} → {c.result} {c.to}
                 </span>
-              </Link>
+              </LoaderLink>
             </motion.div>
           ))}
         </AnimatePresence>

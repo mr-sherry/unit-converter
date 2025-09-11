@@ -8,7 +8,7 @@ export default function Hero() {
           placeholder="Search blog..."
           className="flex-grow px-4 py-2 text-black outline-none"
         />
-        <button className="px-6 py-2 bg-blue-600 text-white font-medium">
+        <button className="px-6 py-2 bg-blue-600 text-white font-medium cursor-pointer">
           Search
         </button>
       </div>

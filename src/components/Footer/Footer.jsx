@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import LoaderLink from "../LoaderLink";
 
 export default function Footer() {
   return (
@@ -23,18 +24,18 @@ export default function Footer() {
           transition={{ delay: 0.4 }}
           className="flex gap-6 text-gray-700 text-sm font-medium"
         >
-          <Link href="/about" className="hover:text-blue-600 transition">
+          <LoaderLink href="/about" className="hover:text-blue-600 transition">
             About
-          </Link>
-          <Link
+          </LoaderLink>
+          <LoaderLink
             href="/privacy-policy"
             className="hover:text-blue-600 transition"
           >
             Privacy
-          </Link>
-          <Link href="/terms" className="hover:text-blue-600 transition">
+          </LoaderLink>
+          <LoaderLink href="/terms" className="hover:text-blue-600 transition">
             Terms
-          </Link>
+          </LoaderLink>
         </motion.div>
       </div>
     </footer>

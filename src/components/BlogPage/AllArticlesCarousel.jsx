@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import LoaderLink from "../LoaderLink";
 
 export default function AllArticlesCarousel() {
   const articles = [
@@ -61,22 +62,26 @@ export default function AllArticlesCarousel() {
               }}
             >
               {/* Overlay */}
-              <div className="absolute inset-0 bg-black/40 flex flex-col justify-end p-4 transition-all">
-                <p className="text-xs text-gray-200 mb-2">{article.date}</p>
-                <h3 className="font-semibold text-lg !text-white ">
-                  {article.title}
-                </h3>
+              <LoaderLink href={"/blogs/details/unit-converter-guide"}>
+                <div className="absolute inset-0 bg-black/40 flex flex-col justify-end p-4 transition-all">
+                  <p className="text-xs text-gray-200 mb-2">{article.date}</p>
+                  <h3 className="font-semibold text-lg !text-white ">
+                    {article.title}
+                  </h3>
 
-                {/* Show extra details */}
-                {isActive && (
-                  <>
-                    <p className="text-sm text-gray-200 mt-2">{article.desc}</p>
-                    <button className="mt-4 px-4 py-2 w-fit bg-white text-black rounded-full hover:bg-gray-200 transition">
-                      Read More →
-                    </button>
-                  </>
-                )}
-              </div>
+                  {/* Show extra details */}
+                  {isActive && (
+                    <>
+                      <p className="text-sm text-gray-200 mt-2">
+                        {article.desc}
+                      </p>
+                      <button className="mt-4 px-4 py-2 w-fit bg-white text-black rounded-full hover:bg-gray-200 transition">
+                        Read More →
+                      </button>
+                    </>
+                  )}
+                </div>
+              </LoaderLink>
             </div>
           );
         })}
