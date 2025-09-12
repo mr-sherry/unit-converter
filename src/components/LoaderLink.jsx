@@ -1,12 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { startLoader } from "./TopLoader";
+import { useRouter } from "next/navigation";
+import { startLoader, finishLoader } from "./TopLoader";
 
 export default function LoaderLink({ href, children, ...props }) {
+  const router = useRouter();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    startLoader();
+    router.push(href);
+    setTimeout(() => finishLoader(), 800);
+  };
+
   return (
-    <Link href={href} onClick={() => startLoader()} {...props}>
+    <a href={href} onClick={handleClick} {...props}>
       {children}
-    </Link>
+    </a>
   );
 }

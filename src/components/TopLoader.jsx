@@ -3,27 +3,50 @@
 
 import { useState, useEffect } from "react";
 
-let triggerLoader = null;
+let triggerStart = null;
+let triggerDone = null;
 
 export function startLoader() {
-  if (triggerLoader) triggerLoader();
+  if (triggerStart) triggerStart();
+}
+
+export function finishLoader() {
+  if (triggerDone) triggerDone();
 }
 
 export default function TopLoader() {
-  const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    triggerLoader = () => {
-      setLoading(true);
-      setTimeout(() => setLoading(false), 600); // show for 600ms
+    triggerStart = () => {
+      setVisible(true);
+      setProgress(5);
+      const step = setInterval(() => {
+        setProgress((old) => (old < 90 ? old + 10 : old));
+      }, 200);
+      setProgressIntervals((prev) => [...prev, step]);
+    };
+
+    triggerDone = () => {
+      setProgress(100);
+      setTimeout(() => {
+        setVisible(false);
+        setProgress(0);
+        progressIntervals.forEach((id) => clearInterval(id));
+        setProgressIntervals([]);
+      }, 400);
     };
   }, []);
 
+  const [progressIntervals, setProgressIntervals] = useState([]);
+
   return (
     <div
-      className={`fixed top-0 left-0 h-[3px] bg-blue-500 transition-all duration-500 ease-out z-50 ${
-        loading ? "w-full opacity-100" : "w-0 opacity-0"
+      className={`fixed top-0 left-0 h-[3px] bg-blue-500 z-50 transition-all duration-300 ease-out ${
+        visible ? "opacity-100" : "opacity-0"
       }`}
+      style={{ width: `${progress}%` }}
     />
   );
 }
