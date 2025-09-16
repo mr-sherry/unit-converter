@@ -12,6 +12,9 @@ import {
   ScaleIcon,
   FireIcon,
   BoltIcon,
+  ArrowsRightLeftIcon,
+  Squares2X2Icon,
+  CubeIcon,
 } from "@heroicons/react/20/solid";
 import { useConversions } from "@/context/ConversionsContext";
 import Image from "next/image";
@@ -82,7 +85,6 @@ export default function Converter({ type, config }) {
     },
   };
 
-  // Additional content for the page
   const benefits = [
     "Free & Ad-Free",
     "Works Offline",
@@ -112,6 +114,21 @@ export default function Converter({ type, config }) {
       type: "power",
       title: "Power Converter",
       icon: BoltIcon,
+    },
+    {
+      type: "length",
+      title: "Length Converter",
+      icon: ArrowsRightLeftIcon,
+    },
+    {
+      type: "area",
+      title: "Area Converter",
+      icon: Squares2X2Icon,
+    },
+    {
+      type: "volume",
+      title: "Volume Converter",
+      icon: CubeIcon,
     },
   ];
 

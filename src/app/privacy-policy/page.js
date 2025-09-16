@@ -85,11 +85,11 @@ export default function Privacy() {
           <h2 className="text-2xl font-semibold text-dark mt-10">
             6. Your Rights
           </h2>
-          <p>
-            Since we do not store personal data, there’s nothing to delete or
-            export. However, you are free to block cookies or analytics tracking
-            if you choose.
-          </p>
+          `  <p>
+              Since we do not store personal data, there’s nothing to delete or
+              export. However, you are free to block cookies or analytics tracking
+              if you choose.
+            </p>`
 
           <h2 className="text-2xl font-semibold text-dark mt-10">
             7. Updates to This Policy

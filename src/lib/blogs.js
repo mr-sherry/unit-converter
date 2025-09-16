@@ -1,7 +1,6 @@
 // lib/blogs.js
 
 const blogs = [
-  // ARTICLE 1: Original Unit Converter Guide
   {
     id: "unit-converter-guide",
     title:
