@@ -2,7 +2,7 @@
 import { CONVERTER_SLUGS } from "@/lib/convertersMap";
 
 export default function sitemap() {
-  const base = "https://yourdomain.com";
+  const base = "https://unit-converters.vercel.app";
   const staticUrls = [
     "",
     "/all-conversions",
