@@ -5,6 +5,7 @@ import Footer from "@/components/Footer/Footer";
 import { ConversionProvider } from "@/context/ConversionsContext";
 import TopLoader from "@/components/TopLoader";
 import { BlogProvider } from "@/context/BlogContext";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {
   title: "Unit Converter",
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
           <ConversionProvider>
             <Header />
             <TopLoader />
+            <Analytics />
             {children}
             <Footer />
           </ConversionProvider>
