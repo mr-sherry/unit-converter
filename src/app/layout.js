@@ -4,6 +4,7 @@ import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import { ConversionProvider } from "@/context/ConversionsContext";
 import TopLoader from "@/components/TopLoader";
+import { BlogProvider } from "@/context/BlogContext";
 
 export const metadata = {
   title: "Unit Converter",
@@ -14,12 +15,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <ConversionProvider>
-          <Header />
-          <TopLoader />
-          {children}
-          <Footer />
-        </ConversionProvider>
+        <BlogProvider>
+          <ConversionProvider>
+            <Header />
+            <TopLoader />
+            {children}
+            <Footer />
+          </ConversionProvider>
+        </BlogProvider>
       </body>
     </html>
   );
