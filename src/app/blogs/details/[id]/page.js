@@ -4,37 +4,49 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import blogs from "@/lib/blogs";
 import LoaderLink from "@/components/LoaderLink";
+import { useBlogs } from "@/context/BlogContext";
 
 export default function Page() {
   const { id } = useParams();
-  const blog = blogs.find((b) => b.id === id);
+
+  const { blogs, loading, error } = useBlogs();
+
+  const blogsList = blogs?.data || [];
+  console.log("blogsList", blogsList);
+  console.log("found", Number(id));
+
+  const blog = blogsList.find((b) => {
+    console.log("b.id", b.id);
+    return b.id === Number(id);
+  });
+  console.log("blog", blog);
 
   const [activeSection, setActiveSection] = useState("");
 
-  useEffect(() => {
-    if (!blog) return;
+  // useEffect(() => {
+  //   if (!blog) return;
 
-    const handleScroll = () => {
-      let current = "";
-      blog.toc.forEach((section) => {
-        const sectionId = section.toLowerCase().replace(/\s+/g, "-");
-        const element = document.getElementById(sectionId);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          const viewportHeight = window.innerHeight;
-          if (rect.top < viewportHeight - 150 && rect.bottom > 150) {
-            current = sectionId;
-          }
-        }
-      });
-      setActiveSection(current);
-    };
+  //   // const handleScroll = () => {
+  //   //   let current = "";
+  //   //   blog.toc.forEach((section) => {
+  //   //     const sectionId = section.toLowerCase().replace(/\s+/g, "-");
+  //   //     const element = document.getElementById(sectionId);
+  //   //     if (element) {
+  //   //       const rect = element.getBoundingClientRect();
+  //   //       const viewportHeight = window.innerHeight;
+  //   //       if (rect.top < viewportHeight - 150 && rect.bottom > 150) {
+  //   //         current = sectionId;
+  //   //       }
+  //   //     }
+  //   //   });
+  //   //   setActiveSection(current);
+  //   // };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
+  //   // window.addEventListener("scroll", handleScroll, { passive: true });
+  //   // handleScroll();
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [blog]);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, [blog]);
 
   if (!blog) {
     return <div className="p-10 text-center">Blog not found.</div>;
@@ -63,7 +75,7 @@ export default function Page() {
       {/* Hero Image */}
       <div className="mb-10">
         <Image
-          src={blog.image}
+          src={`https://converter.miftatech.com/${blog.thumbnail}`}
           alt={blog.title}
           width={1200}
           height={500}
@@ -76,51 +88,46 @@ export default function Page() {
         {/* Sidebar */}
         <aside className="lg:col-span-1 space-y-8 sticky top-20 h-fit self-start">
           <div>
-            <h4 className="font-semibold mb-3">On this page</h4>
-            <ul className="space-y-2 text-sm">
-              {blog.toc.map((item, idx) => {
-                const sectionId = item.toLowerCase().replace(/\s+/g, "-");
-                return (
-                  <li key={idx}>
-                    <a
-                      href={`#${sectionId}`}
-                      className={`block transition-colors ${
-                        activeSection === sectionId
-                          ? "!text-black font-semibold"
-                          : "text-gray-600 hover:text-black"
-                      }`}
-                    >
-                      {item}
-                    </a>
+            <h4 className="font-semibold mb-3">Related Articles</h4>
+            <ul className="space-y-4 text-sm">
+              {blogsList
+                // exclude the current article by ID
+                .filter((item) => item.id !== blog.id)
+                // show only 3 related posts
+                .slice(0, 3)
+                .map((related, idx) => (
+                  <li key={idx} className="flex gap-3">
+                    <Image
+                      src={`https://converter.miftatech.com/${related.thumbnail}`}
+                      alt={related.title}
+                      height={56}
+                      width={56}
+                      className="w-14 h-14 object-cover rounded-md flex-shrink-0"
+                    />
+                    <div>
+                      <a
+                        href={`/blogs/details/${related.id}`}
+                        className="block font-medium hover:text-black transition-colors text-gray-700"
+                      >
+                        {related.title}
+                      </a>
+                      <p className="text-xs text-gray-500 line-clamp-2">
+                        {related.description
+                          ?.replace(/<[^>]*>?/gm, "")
+                          .slice(0, 60)}
+                        ...
+                      </p>
+                    </div>
                   </li>
-                );
-              })}
+                ))}
             </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold mb-3">Share Article</h4>
-            <div className="flex space-x-4 text-gray-600">
-              <a href="#" className="hover:text-black">
-                🌐
-              </a>
-              <a href="#" className="hover:text-black">
-                🐦
-              </a>
-              <a href="#" className="hover:text-black">
-                📸
-              </a>
-              <a href="#" className="hover:text-black">
-                💼
-              </a>
-            </div>
           </div>
         </aside>
 
         {/* Blog Content */}
         <div
           className="lg:col-span-3 prose prose-gray max-w-none"
-          dangerouslySetInnerHTML={{ __html: blog.content }}
+          dangerouslySetInnerHTML={{ __html: blog.description }}
         />
       </div>
     </div>

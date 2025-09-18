@@ -1,21 +1,26 @@
 "use client";
 import { useBlogs } from "@/context/BlogContext";
 import LoaderLink from "../LoaderLink";
+import { use, useEffect, useState } from "react";
 
 const stripHtml = (html) => {
   if (!html) return "";
-  return html.replace(/<[^>]*>?/gm, "").slice(0, 100); 
+  return html.replace(/<[^>]*>?/gm, "").slice(0, 100);
 };
 
 export default function PopularArticles() {
   const { blogs, loading, error } = useBlogs();
+  let [bigArticle, setBigArticle] = useState(null);
+  let [smallArticles, setSmallArticles] = useState([]);
 
   const blogsList = blogs?.data || [];
-
-  const bigArticle = blogsList[0];
-  console.log(bigArticle);
-
-  const smallArticles = blogsList.slice(1, 4);
+  useEffect(() => {
+    if (!loading && blogsList.length > 0) {
+      setBigArticle(blogsList[0]);
+      console.log(bigArticle);
+      setSmallArticles(blogsList?.slice(1, 4));
+    }
+  }, [loading, blogsList]);
 
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 gap-4 p-6">
@@ -29,7 +34,7 @@ export default function PopularArticles() {
         ) : bigArticle ? (
           <>
             <img
-              src={`/${bigArticle.thumbnail}`}
+              src={`https://converter.miftatech.com/${bigArticle.thumbnail}`}
               alt={bigArticle.title}
               className="object-cover rounded-2xl w-130 h-100"
             />
@@ -71,7 +76,7 @@ export default function PopularArticles() {
               className="flex gap-4 rounded-2xl overflow-hidden w-full"
             >
               <img
-                src={`/${article.thumbnail}`}
+                src={`https://converter.miftatech.com/${article.thumbnail}`}
                 alt={article.title}
                 className="w-46 h-42 object-cover rounded-xl"
               />
