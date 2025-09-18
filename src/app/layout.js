@@ -6,6 +6,7 @@ import { ConversionProvider } from "@/context/ConversionsContext";
 import TopLoader from "@/components/TopLoader";
 import { BlogProvider } from "@/context/BlogContext";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata = {
   title: "Unit Converter",
@@ -21,6 +22,7 @@ export default function RootLayout({ children }) {
             <Header />
             <TopLoader />
             <Analytics />
+            <SpeedInsights />
             {children}
             <Footer />
           </ConversionProvider>
