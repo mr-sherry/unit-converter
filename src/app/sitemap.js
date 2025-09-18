@@ -1,4 +1,3 @@
-// app/sitemap.ts
 import { CONVERTER_SLUGS } from "@/lib/convertersMap";
 
 export default function sitemap() {
