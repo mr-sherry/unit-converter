@@ -35,7 +35,7 @@ export default function Contact() {
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.7 }}
             className="text-4xl font-bold text-dark mb-8"
           >
             Contact Us
