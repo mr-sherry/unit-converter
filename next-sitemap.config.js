@@ -1,19 +1,24 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: "https://unit-converters.vercel.app", // your live domain
-  generateRobotsTxt: true, // (optional) generate robots.txt
+  siteUrl: 'https://unit-converters.vercel.app', // your live domain
+  generateRobotsTxt: true, // generate /robots.txt automatically
+  outDir: './public', // output static files into /public
   sitemapSize: 5000,
-  changefreq: "daily", // tell Google you update often
+  changefreq: 'daily',
   priority: 0.7,
   robotsTxtOptions: {
-    policies: [{ userAgent: "*", allow: "/" }],
+    policies: [
+      {
+        userAgent: '*',
+        allow: '/',
+      },
+    ],
   },
-  // Optional: If your dynamic routes are not automatically detected:
   transform: async (config, path) => {
     return {
-      loc: path, // => https://unit-converters.vercel.app/path
-      changefreq: "daily",
-      priority: path === "/" ? 1.0 : 0.7,
+      loc: path,
+      changefreq: 'daily',
+      priority: path === '/' ? 1.0 : 0.7,
       lastmod: new Date().toISOString(),
     };
   },
