@@ -1,9 +1,0 @@
-# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://unit-converters.vercel.app
-
-# Sitemaps
-Sitemap: https://unit-converters.vercel.app/sitemap.xml
