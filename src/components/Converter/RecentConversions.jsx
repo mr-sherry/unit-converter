@@ -3,7 +3,7 @@
 import { useConversions } from '@/context/ConversionsContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import LoaderLink from '../LoaderLink';
-import { UNIT_NAMES } from '@/lib/unitnames'; // ✅ new import
+import { UNIT_NAMES } from '@/lib/unitNames'; // ✅ new import
 
 export default function RecentConversions() {
   const { conversions } = useConversions();
@@ -43,7 +43,9 @@ export default function RecentConversions() {
                 className='p-4 border rounded-lg bg-white shadow-sm flex flex-col cursor-pointer hover:shadow-md transition'
               >
                 <LoaderLink
-                  href={`/converter/${c.type}/${c.from}-to-${c.to}/${c.value}`} // ✅ still abbreviation for URL
+                  href={`/converter/${c.type
+                    .toLowerCase()
+                    .replace(/\s+/g, '-')}/${c.from}-to-${c.to}/${c.value}`}
                   className='flex flex-col h-full justify-between'
                 >
                   <span className='text-gray-900 font-semibold text-lg'>

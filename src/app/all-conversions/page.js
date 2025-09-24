@@ -19,8 +19,9 @@ export default function AllConversions() {
 
             // Build a **default URL** for each converter type
             // using the first two units from its config
-            const defaultFrom = converter.units[0];
-            const defaultTo = converter.units[1];
+            const cleanUnit = (unit) => unit.replace('/', '-');
+            const defaultFrom = cleanUnit(converter.units[0]); // "m-s"
+            const defaultTo = cleanUnit(converter.units[1]); // "km-h"
             const defaultValue = 1;
 
             return (

@@ -22,7 +22,8 @@ export default async function sitemap() {
     priority: route === '' ? 1.0 : 0.7,
   }));
 
-  // --- Dynamic routes from Firebase ---
+
+  // --- Dynamic routes from all conversions in Firebase ---
   let dynamicRoutes = [];
   try {
     const conversionsRef = ref(db, 'conversions');
@@ -31,29 +32,40 @@ export default async function sitemap() {
     if (snapshot.exists()) {
       const data = snapshot.val();
 
-      // Map conversions to encoded URLs
-      dynamicRoutes = Object.values(data).map((val) => ({
-        url: `${baseUrl}/converter/${encodeURIComponent(
-          val.type
-        )}/${encodeURIComponent(val.from)}-to-${encodeURIComponent(val.to)}/${
-          val.value
-        }`,
-        lastModified: new Date(val.createdAt).toISOString(),
-        changeFrequency: 'daily',
-        priority: 0.8,
-      }));
+      dynamicRoutes = Object.values(data).map((val) => {
+        // Encode each dynamic segment to handle spaces/special chars
+        const type = encodeURIComponent(val.type);
+        const from = encodeURIComponent(val.from);
+        const to = encodeURIComponent(val.to);
+        const value = encodeURIComponent(val.value);
 
-      // Remove duplicate URLs
+        const url = `${baseUrl}/converter/${type}/${from}-to-${to}/${value}`;
+
+        return {
+          url,
+          lastModified: new Date(val.createdAt).toISOString(),
+          changeFrequency: 'daily',
+          priority: 0.8,
+        };
+      });
+
+      // Remove duplicates
       const seen = new Set();
       dynamicRoutes = dynamicRoutes.filter((item) => {
-        if (seen.has(item.url)) return false;
+        if (seen.has(item.url)) {
+          return false;
+        }
         seen.add(item.url);
         return true;
       });
+
+    } else {
+      console.log('No conversions found in Firebase.');
     }
   } catch (err) {
     console.error('Error fetching conversions for sitemap:', err);
   }
 
-  return [...staticRoutes, ...dynamicRoutes];
+  const sitemapUrls = [...staticRoutes, ...dynamicRoutes];
+  return sitemapUrls;
 }

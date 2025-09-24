@@ -1,7 +1,7 @@
 import Converter from '@/components/Converter/Converter';
 import { CONVERTERS, CONVERTER_SLUGS } from '@/lib/convertersMap';
 
-export const dynamicParams = false;
+export const dynamicParams = true;
 
 /**
  * Generate static pages for:
@@ -69,7 +69,9 @@ export async function generateMetadata({ params }) {
   };
 }
 
-// --- Await params in page component ---
+
+const restoreUnit = (unit) => decodeURIComponent(unit).replace(/-/g, '/');
+
 export default async function ConverterPage({ params }) {
   params = await params;
   const { type, fromto, value } = params;
@@ -84,9 +86,10 @@ export default async function ConverterPage({ params }) {
     );
   }
 
+  // Split fromto and restore original units
   const [fromParam, toParam] = (fromto || '').split('-to-');
-  const from = fromParam || config.units[0];
-  const to = toParam || config.units[1];
+  const from = restoreUnit(fromParam || config.units[0]);
+  const to = restoreUnit(toParam || config.units[1]);
 
   return (
     <Converter type={type} from={from} to={to} value={value} config={config} />
