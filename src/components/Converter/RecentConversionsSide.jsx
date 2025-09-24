@@ -29,7 +29,7 @@ export default function RecentConversionsSide() {
         <AnimatePresence>
           {conversions.map((c) => {
             // ✅ Build URL with abbreviations
-            const link = `/converter/${c.type}/${c.from}-to-${c.to}/${c.value}`;
+            const link = `/converter/${c.type}/${c.value}-${c.from}-to-${c.to}`;
 
             // ✅ Full names for display
             const fromFull = UNIT_NAMES[c.from] || c.from;

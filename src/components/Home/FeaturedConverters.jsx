@@ -37,7 +37,7 @@ export default function FeaturedConverters() {
                 className='h-full' // make the motion wrapper full height
               >
                 <LoaderLink
-                  href={`/converter/${slug}/${defaultFrom}-to-${defaultTo}/${defaultValue}`}
+                  href={`/converter/${slug}/${defaultValue}-${defaultFrom}-to-${defaultTo}`}
                   className='h-full flex flex-col justify-between group p-6 rounded-xl bg-white border border-[#DBE2EF] shadow-sm hover:shadow-lg transition-transform hover:-translate-y-2'
                 >
                   <div className='flex-grow'>

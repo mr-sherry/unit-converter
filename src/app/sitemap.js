@@ -22,7 +22,6 @@ export default async function sitemap() {
     priority: route === '' ? 1.0 : 0.7,
   }));
 
-
   // --- Dynamic routes from all conversions in Firebase ---
   let dynamicRoutes = [];
   try {
@@ -39,7 +38,7 @@ export default async function sitemap() {
         const to = encodeURIComponent(val.to);
         const value = encodeURIComponent(val.value);
 
-        const url = `${baseUrl}/converter/${type}/${from}-to-${to}/${value}`;
+        const url = `${baseUrl}/converter/${type}/${value}-${from}-to-${to}`;
 
         return {
           url,
@@ -58,7 +57,6 @@ export default async function sitemap() {
         seen.add(item.url);
         return true;
       });
-
     } else {
       console.log('No conversions found in Firebase.');
     }

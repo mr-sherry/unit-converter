@@ -24,10 +24,10 @@ export async function generateStaticParams() {
         const to = units[j];
 
         ['1', '10', '100'].forEach((value) => {
+          // new pattern: "1-kg-to-g"
           paths.push({
             type,
-            fromto: `${from}-to-${to}`,
-            value,
+            valuefromto: `${value}-${from}-to-${to}`,
           });
         });
       }
@@ -40,24 +40,29 @@ export async function generateStaticParams() {
 // --- Await params for App Router ---
 export async function generateMetadata({ params }) {
   params = await params;
+  const { type, valuefromto } = params;
 
-  const meta = CONVERTERS[params.type];
+  const meta = CONVERTERS[type];
   const base = 'https://unit-converters.vercel.app';
 
   if (!meta) {
     return { title: 'UnitX Converter', description: 'Free unit converter.' };
   }
 
+  // parse value + fromto from the single param
+  const [value, ...rest] = valuefromto.split('-');
+  const fromto = rest.join('-');
+
   return {
     title: `${meta.title} | UnitX`,
     description: meta.description,
     alternates: {
-      canonical: `${base}/converter/${params.type}/${params.fromto}/${params.value}`,
+      canonical: `${base}/converter/${type}/${valuefromto}`,
     },
     openGraph: {
       title: `${meta.title} | UnitX`,
       description: meta.description,
-      url: `${base}/converter/${params.type}/${params.fromto}/${params.value}`,
+      url: `${base}/converter/${type}/${valuefromto}`,
       siteName: 'UnitX',
       type: 'website',
     },
@@ -69,12 +74,12 @@ export async function generateMetadata({ params }) {
   };
 }
 
-
+// Utility to restore units from URL
 const restoreUnit = (unit) => decodeURIComponent(unit).replace(/-/g, '/');
 
 export default async function ConverterPage({ params }) {
   params = await params;
-  const { type, fromto, value } = params;
+  const { type, valuefromto } = params;
 
   const config = CONVERTERS[type];
 
@@ -85,6 +90,10 @@ export default async function ConverterPage({ params }) {
       </section>
     );
   }
+
+  // Parse the combined param: "1-kg-to-g"
+  const [value, ...rest] = valuefromto.split('-');
+  const fromto = rest.join('-');
 
   // Split fromto and restore original units
   const [fromParam, toParam] = (fromto || '').split('-to-');

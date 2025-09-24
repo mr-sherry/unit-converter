@@ -45,7 +45,7 @@ export default function RecentConversions() {
                 <LoaderLink
                   href={`/converter/${c.type
                     .toLowerCase()
-                    .replace(/\s+/g, '-')}/${c.from}-to-${c.to}/${c.value}`}
+                    .replace(/\s+/g, '-')}/${c.value}-${c.from}-to-${c.to}`}
                   className='flex flex-col h-full justify-between'
                 >
                   <span className='text-gray-900 font-semibold text-lg'>

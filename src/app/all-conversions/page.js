@@ -17,17 +17,21 @@ export default function AllConversions() {
           {CONVERTER_SLUGS.map((slug) => {
             const converter = CONVERTERS[slug];
 
-            // Build a **default URL** for each converter type
-            // using the first two units from its config
+            // Convert unit to URL-friendly (replace / with -)
             const cleanUnit = (unit) => unit.replace('/', '-');
-            const defaultFrom = cleanUnit(converter.units[0]); // "m-s"
-            const defaultTo = cleanUnit(converter.units[1]); // "km-h"
+
+            // Default units & value
+            const defaultFrom = cleanUnit(converter.units[0]);
+            const defaultTo = cleanUnit(converter.units[1]);
             const defaultValue = 1;
+
+            // ✅ New URL format: /converter/[type]/[value]-[from]-to-[to]
+            const href = `/converter/${slug}/${defaultValue}-${defaultFrom}-to-${defaultTo}`;
 
             return (
               <LoaderLink
                 key={slug}
-                href={`/converter/${slug}/${defaultFrom}-to-${defaultTo}/${defaultValue}`}
+                href={href}
                 className='p-5 rounded-xl border bg-white hover:shadow-sm transition'
               >
                 <h2 className='font-semibold'>{converter.title}</h2>

@@ -6,19 +6,9 @@ import { converters } from '@/lib/conversions';
 import { FAQS } from '@/lib/faqs';
 import { CONVERTER_IMAGES } from '@/lib/converterImages';
 import { Listbox } from '@headlessui/react';
-import {
-  ChevronUpDownIcon,
-  CheckIcon,
-  ScaleIcon,
-  FireIcon,
-  BoltIcon,
-  ArrowsRightLeftIcon,
-  Squares2X2Icon,
-  CubeIcon,
-} from '@heroicons/react/20/solid';
+import { ChevronUpDownIcon, CheckIcon } from '@heroicons/react/20/solid';
 import { useConversions } from '@/context/ConversionsContext';
 import Image from 'next/image';
-import RecentConversions from './RecentConversions';
 import ConverterExtras from './ConvertersExtras';
 
 export default function Converter({
@@ -102,29 +92,6 @@ export default function Converter({
       'query-input': 'required name=value',
     },
   };
-
-  const benefits = [
-    'Free & Ad-Free',
-    'Works Offline',
-    'Fast & Accurate',
-    'Mobile & Desktop Friendly',
-  ];
-
-  const instructions = [
-    'Enter the value you want to convert.',
-    'Select the unit you are converting from.',
-    'Select the unit you want to convert to.',
-    "Click 'Convert' to see the result instantly.",
-  ];
-
-  const relatedConverters = [
-    { key: 'weight', title: 'Weight Converter', icon: ScaleIcon },
-    { key: 'temperature', title: 'Temperature Converter', icon: FireIcon },
-    { key: 'power', title: 'Power Converter', icon: BoltIcon },
-    { key: 'length', title: 'Length Converter', icon: ArrowsRightLeftIcon },
-    { key: 'area', title: 'Area Converter', icon: Squares2X2Icon },
-    { key: 'volume', title: 'Volume Converter', icon: CubeIcon },
-  ];
 
   return (
     <motion.section
@@ -305,10 +272,7 @@ export default function Converter({
 
         <ConverterExtras
           config={config}
-          benefits={benefits}
-          instructions={instructions}
           exampleConversions={exampleConversions}
-          relatedConverters={relatedConverters}
         />
       </div>
 
