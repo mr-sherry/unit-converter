@@ -3,7 +3,7 @@
 import { useConversions } from '@/context/ConversionsContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import LoaderLink from '../LoaderLink';
-import { UNIT_NAMES } from '@/lib/unitNames'; // ✅ new import
+import { UNIT_NAMES } from '@/lib/allUnitNames';
 
 export default function RecentConversions() {
   const { conversions } = useConversions();
