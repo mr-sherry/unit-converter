@@ -50,8 +50,6 @@ export default function Converter({
     }
     const res = convertFn(parseFloat(val), f, t);
     setResult(`${res.toFixed(6)} ${t}`);
-
-    resultRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const convertButton = (val = value, f = from, t = to) => {
@@ -65,6 +63,7 @@ export default function Converter({
       result: parseFloat(res.toFixed(2)),
       type: type,
     });
+    resultRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const faqs = FAQS[type] || [];
