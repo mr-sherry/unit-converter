@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
+    "update-sitemap": "node scripts/update-sitemap.js",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "clean-start": "powershell -Command \"Remove-Item -Recurse -Force .next; npm run build; npm run start\"",
-    "update-sitemap": "node scripts/update-sitemap.js"
+    "clean-start": "powershell -Command \"Remove-Item -Recurse -Force .next; npm run build; npm run start\""
   },
   "dependencies": {
     "@headlessui/react": "^2.2.7",
