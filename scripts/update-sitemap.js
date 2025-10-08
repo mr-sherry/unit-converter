@@ -5,10 +5,11 @@
  * ✅ Appends them to /public/sitemaps/sitemap-*.xml files
  * ✅ Keeps sitemap chunks under 50k URLs
  * ✅ Updates /public/sitemaps/sitemap-index.xml
+ * ✅ Exits cleanly after completion
  */
-import 'dotenv/config';
 
-import { initializeApp } from 'firebase/app';
+import 'dotenv/config';
+import { initializeApp, deleteApp } from 'firebase/app';
 import {
   getDatabase,
   ref,
@@ -17,12 +18,10 @@ import {
   startAt,
   get,
 } from 'firebase/database';
-
 import fs from 'fs';
 import path from 'path';
 
 // --- Firebase Config ---
-// (You can pass these as GitHub Action secrets or hardcode locally for testing)
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -40,10 +39,6 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 // --- Helpers ---
-function toISOString(ms) {
-  return new Date(ms).toISOString();
-}
-
 function buildUrl({ type, from, to, value }) {
   return `${baseUrl}/converter/${encodeURIComponent(type)}/${encodeURIComponent(
     value
@@ -82,7 +77,7 @@ function createIndexXml(files) {
 
 // --- Step 1: Fetch recent conversions ---
 async function fetchNewConversions() {
-  const since = Date.now() - 24 * 60 * 60 * 1000;
+  const since = Date.now() - 24 * 60 * 60 * 1000; // last 24h
   const conversionsQuery = query(
     ref(db, 'conversions'),
     orderByChild('createdAt'),
@@ -160,26 +155,36 @@ function writeSitemaps(allUrls) {
 
 // --- Run ---
 (async () => {
-  console.log('🚀 Updating sitemap...');
+  try {
+    console.log('🚀 Updating sitemap...');
 
-  const newUrls = await fetchNewConversions();
-  console.log(`📦 Found ${newUrls.length} new URLs in the last 24h`);
+    const newUrls = await fetchNewConversions();
+    console.log(`📦 Found ${newUrls.length} new URLs in the last 24h`);
 
-  const { urls: existingUrls } = loadExistingSitemaps();
-  const existingSet = new Set(existingUrls);
+    const { urls: existingUrls } = loadExistingSitemaps();
 
-  // Only add truly new URLs
-  const combinedUrls = [
-    ...existingUrls.map((u) => ({
-      url: u,
-      lastModified: new Date().toISOString(),
-      changeFrequency: 'daily',
-      priority: 0.8,
-    })),
-    ...newUrls,
-  ].filter((u, i, arr) => arr.findIndex((x) => x.url === u.url) === i);
+    const combinedUrls = [
+      ...existingUrls.map((u) => ({
+        url: u,
+        lastModified: new Date().toISOString(),
+        changeFrequency: 'daily',
+        priority: 0.8,
+      })),
+      ...newUrls,
+    ].filter((u, i, arr) => arr.findIndex((x) => x.url === u.url) === i);
 
-  writeSitemaps(combinedUrls);
+    writeSitemaps(combinedUrls);
 
-  console.log('🎉 Sitemap update complete!');
+    console.log('🎉 Sitemap update complete!');
+  } catch (err) {
+    console.error('❌ Error during sitemap update:', err);
+  } finally {
+    // ✅ Always close Firebase and exit
+    try {
+      await deleteApp(app);
+    } catch {
+      console.warn('⚠️ Firebase already closed.');
+    }
+    process.exit(0);
+  }
 })();
