@@ -1,103 +1,95 @@
-"use client";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+'use client';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const steps = [
   {
-    title: "Select a Converter Tool",
-    desc: "Choose from Length, Weight, Temperature, and many more converter options available on our site.",
+    title: 'Select a Converter Tool',
+    desc: 'Choose from Length, Weight, Temperature, and many more converter options available on our site.',
   },
   {
-    title: "Enter Your Value",
-    desc: "Type in the number you want to convert, then pick the unit you want to convert from and to.",
+    title: 'Enter Your Value',
+    desc: 'Type in the number you want to convert, then pick the unit you want to convert from and to.',
   },
   {
-    title: "Get Instant Results",
-    desc: "See accurate results instantly, right in your browser, without any downloads or API calls.",
+    title: 'Get Instant Results',
+    desc: 'See accurate results instantly, right in your browser, without any downloads or API calls.',
   },
 ];
 
 export default function HowItWorks() {
-  const [openIndex, setOpenIndex] = useState(null);
+  const [openIndex, setOpenIndex] = useState();
 
   const toggle = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
-    <section className="w-full py-20 px-6 bg-accent">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-        {/* Left Column - Accordion */}
-        <div>
-          <motion.h2
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-3xl font-bold text-dark mb-10"
-          >
-            How It Works
-          </motion.h2>
+    <section className='relative py-28 px-6 bg-gradient-to-b from-white via-gray-50 to-gray-100 overflow-hidden'>
+      {/* 🖼️ Background Illustration */}
+      <motion.div
+        className="absolute inset-0 bg-[url('/Home/accordian.svg')] bg-center bg-no-repeat bg-contain opacity-10"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 0.1 }}
+        transition={{ duration: 1.5 }}
+      />
 
-          <div className="space-y-4">
-            {steps.map((step, index) => (
-              <motion.div
-                key={index}
-                layout
-                transition={{ duration: 0.4, ease: "easeInOut" }}
-                className="bg-white rounded-xl shadow-md  overflow-hidden"
-              >
-                {/* Header */}
-                <button
-                  onClick={() => toggle(index)}
-                  className="w-full flex justify-between items-center px-6 py-4 text-left font-semibold text-primary hover:bg-primary/10 transition"
-                >
-                  <span>{`${index + 1}. ${step.title}`}</span>
-                  <motion.span
-                    key={openIndex === index ? "minus" : "plus"}
-                    initial={{ opacity: 0, rotate: -90 }}
-                    animate={{ opacity: 1, rotate: 0 }}
-                    exit={{ opacity: 0, rotate: 90 }}
-                    transition={{ duration: 0.2 }}
-                    className="text-xl font-bold"
-                  >
-                    {openIndex === index ? "−" : "+"}
-                  </motion.span>
-                </button>
-
-                {/* Content */}
-                <AnimatePresence>
-                  {openIndex === index && (
-                    <motion.div
-                      key="content"
-                      layout
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="px-6 pb-4 text-dark/80"
-                    >
-                      {step.desc}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* Right Column - Image */}
+      <div className='relative max-w-4xl mx-auto'>
+        {/* ✨ Heading */}
         <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex justify-center"
+          className='text-center mb-14'
         >
-          <img
-            src="/Home/accordian.svg"
-            alt="How it works illustration"
-            className="max-w-md w-full"
-          />
+          <h2 className='text-4xl md:text-5xl font-bold text-gray-900 mb-4'>
+            How It Works
+          </h2>
+          <p className='text-gray-500 text-lg max-w-2xl mx-auto leading-relaxed'>
+            Follow these simple steps to convert any unit effortlessly — fast,
+            precise, and smooth.
+          </p>
         </motion.div>
+
+        {/* 🧩 Accordion */}
+        <div className='space-y-4'>
+          {steps.map((step, index) => (
+            <div
+              key={index}
+              className={`rounded-2xl overflow-hidden border ${
+                openIndex === index
+                  ? 'border-gray-300 bg-white shadow-md'
+                  : 'border-gray-100 bg-white/70 shadow-sm'
+              } backdrop-blur-sm transition-all duration-300`}
+            >
+              {/* Header */}
+              <button
+                onClick={() => toggle(index)}
+                className='w-full flex justify-between items-center px-6 py-5 text-left font-semibold text-gray-800 hover:text-black transition'
+              >
+                <span className='text-base md:text-lg flex items-center gap-2'>
+                  <span className='text-gray-400 text-sm'>{index + 1}.</span>{' '}
+                  {step.title}
+                </span>
+
+                <span
+                  className={`text-2xl text-gray-500 transform transition-transform duration-300 ${
+                    openIndex === index ? 'rotate-180' : ''
+                  }`}
+                >
+                  ▾
+                </span>
+              </button>
+
+              {/* Content */}
+              {openIndex === index && (
+                <div className='px-6 pb-5 text-gray-600 text-base leading-relaxed'>
+                  {step.desc}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

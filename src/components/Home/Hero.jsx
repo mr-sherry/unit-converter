@@ -1,38 +1,63 @@
-"use client";
-import Image from "next/image";
+'use client';
+import { motion } from 'framer-motion';
 
 export default function Hero() {
   return (
-    <section className="relative py-20 px-6">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-        {/* Left Content */}
-        <div>
-          <p className="mb-2 text-sm uppercase tracking-wide">
-            Save time and effort
-          </p>
-          <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
-            Free Online <br />
-            <span>Unit Converter</span>
-          </h1>
-          <p className="text-lg opacity-80 mb-8 max-w-md">
-            Convert length, weight, temperature, and more instantly with our
-            fast, accurate converter tools — all in your browser.
-          </p>
-          <a href="#converters" className="btn">
-            Start Converting
-          </a>
-        </div>
+    <section className='relative flex items-center justify-center overflow-hidden py-32 px-6 text-center h-[100vh]'>
+      {/* 🎥 Background Video */}
+      <div className='absolute inset-0 overflow-hidden'>
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className='w-full h-full object-cover object-center'
+        >
+          <source src='/Home/bg1.mp4' type='video/mp4' />
+        </video>
+        {/* Dark overlay for readability */}
+      </div>
 
-        {/* Right Image */}
-        <div className="relative">
-          <Image
-            src="/Home/hero.svg"
-            alt="Unit Converter Illustration"
-            width={500}
-            height={500}
-            className="mx-auto drop-shadow-lg rounded-xl"
-          />
-        </div>
+      {/* 🧱 Content */}
+      <div className='relative z-10 max-w-3xl mx-auto flex flex-col items-center justify-center text-center'>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className='flex flex-col items-center'
+        >
+          {/* Subtext Badge */}
+          <div className='inline-block px-4 py-2 mb-5 rounded-full bg-white/20 backdrop-blur-sm text-sm font-medium text-white border border-white/30'>
+            ⚡ Fast • Accurate • Free
+          </div>
+
+          {/* Heading */}
+          <h1 className='text-5xl md:text-7xl font-extrabold leading-tight text-white mb-6'>
+            Convert Anything Instantly
+          </h1>
+
+          {/* Description */}
+          <p className='text-lg md:text-xl text-gray-200 mb-10 max-w-2xl leading-relaxed'>
+            All-in-one converter for length, weight, temperature, currency, and
+            more. Simple. Elegant. Lightning-fast.
+          </p>
+
+          {/* Buttons */}
+          <div className='flex flex-wrap gap-4 justify-center'>
+            <a
+              href='#converters'
+              className='px-8 py-4 rounded-xl font-semibold text-black bg-white hover:bg-gray-100 shadow-lg hover:-translate-y-1 transition-all duration-200'
+            >
+              Start Converting
+            </a>
+            <a
+              href='#features'
+              className='px-8 py-4 rounded-xl font-semibold border border-white/60 bg-white/10 backdrop-blur-md text-white hover:bg-white/20 transition-all duration-200'
+            >
+              Learn More
+            </a>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
