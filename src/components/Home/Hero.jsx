@@ -20,12 +20,7 @@ export default function Hero() {
 
       {/* 🧱 Content */}
       <div className='relative z-10 max-w-3xl mx-auto flex flex-col items-center justify-center text-center'>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className='flex flex-col items-center'
-        >
+        <div className='flex flex-col items-center'>
           {/* Subtext Badge */}
           <div className='inline-block px-4 py-2 mb-5 rounded-full bg-white/20 backdrop-blur-sm text-sm font-medium text-white border border-white/30'>
             ⚡ Fast • Accurate • Free
@@ -57,7 +52,7 @@ export default function Hero() {
               Learn More
             </a>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
