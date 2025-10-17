@@ -81,12 +81,7 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <motion.nav
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className='md:hidden bg-white/90 backdrop-blur-md border-t border-neutral-200 shadow-lg'
-        >
+        <nav className='md:hidden bg-white/90 backdrop-blur-md border-t border-neutral-200 shadow-lg'>
           <div className='flex flex-col px-6 py-5 space-y-4 text-neutral-800 font-medium'>
             <LoaderLink href='/' onClick={() => setIsOpen(false)}>
               Home
@@ -118,7 +113,7 @@ export default function Header() {
               Request Conversion
             </LoaderLink>
           </div>
-        </motion.nav>
+        </nav>
       )}
     </header>
   );
