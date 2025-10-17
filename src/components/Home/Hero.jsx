@@ -1,49 +1,34 @@
 'use client';
-
-import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 export default function Hero() {
-  const [videoLoaded, setVideoLoaded] = useState(false);
-
-  useEffect(() => {
-    // Trigger fade-in once video starts loading
-    const timer = setTimeout(() => setVideoLoaded(true), 300);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <section className='relative flex items-center justify-center overflow-hidden py-32 px-6 text-center h-[100vh]'>
-      {/* 🎥 Background Video (lazy-loaded) */}
-      {videoLoaded && (
-        <motion.video
-          key='hero-video'
+      {/* 🎥 Background Video */}
+      <div className='absolute inset-0 overflow-hidden'>
+        <video
           autoPlay
           loop
           muted
           playsInline
           poster='/Home/poster.webp'
-          preload='none'
-          className='absolute inset-0 w-full h-full object-cover object-center opacity-0'
-          onLoadedData={(e) => e.target.classList.add('opacity-100')}
-          transition={{ duration: 1 }}
+          className='w-full h-full object-cover object-center'
         >
           <source src='/Home/bg1.mp4' type='video/mp4' />
-        </motion.video>
-      )}
+        </video>
+        {/* Dark overlay for readability */}
+      </div>
 
-      {/* 🌙 Overlay for text readability */}
-
-      {/* 🧱 Hero Content */}
-      <div className='relative z-10 max-w-3xl mx-auto flex flex-col items-center justify-center text-center px-4'>
+      {/* 🧱 Content */}
+      <div className='relative z-10 max-w-3xl mx-auto flex flex-col items-center justify-center text-center'>
         <div className='flex flex-col items-center'>
-          {/* Badge */}
+          {/* Subtext Badge */}
           <div className='inline-block px-4 py-2 mb-5 rounded-full bg-white/20 backdrop-blur-sm text-sm font-medium text-white border border-white/30'>
             ⚡ Fast • Accurate • Free
           </div>
 
           {/* Heading */}
-          <h1 className='text-5xl md:text-7xl font-extrabold leading-tight text-white mb-6 drop-shadow-md'>
+          <h1 className='text-5xl md:text-7xl font-extrabold leading-tight text-white mb-6'>
             Convert Anything Instantly
           </h1>
 
